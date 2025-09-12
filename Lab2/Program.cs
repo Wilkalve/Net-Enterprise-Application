@@ -231,7 +231,7 @@ namespace Lab2
 
 
         // Bubble Sort implementation
-        public static void BubbleSort(List<string> words)
+        public static IList<string> BubbleSort(IList<string> words)
         {
             int n = words.Count;
 
@@ -249,10 +249,12 @@ namespace Lab2
                     }
                 }
             }
+
+            return words;
         }
 
         // LINQ/Lambda sort words
-        public static List<string> sortWord(IEnumerable<string> words)
+        public static IList<string> sortWord(IList<string> words)
         {
 
             return words.Where(w => !string.IsNullOrWhiteSpace(w))
@@ -278,21 +280,16 @@ namespace Lab2
         }
 
         // Reverse each word and print the list
+
         public static void ReverseWords(List<string> words)
         {
-            foreach (var word in words)
-            {
-
-                if (!string.IsNullOrWhiteSpace(word))
-                {
-                    string trimmedword = word.Trim();
-                    char[] chars = trimmedword.ToCharArray();
-                    Array.Reverse(chars);
-                    string reverse = new string(chars);
-                    Console.WriteLine(reverse);
-                }
-            }
+            words
+                .Where(w => !string.IsNullOrWhiteSpace(w))
+                .Select(w => new string(w.Trim().Reverse().ToArray()))
+                .ToList()
+                .ForEach(Console.WriteLine);
         }
+
         // Words that end with 'a' and display the count
         public static void wordEndingWithA(IEnumerable<string> words)
         {
